@@ -12,7 +12,22 @@ const Tab = createBottomTabNavigator();
 
 
 function AdminPageNavigation({navigation, route}) {
-  const {idUser} = route.params; 
+  const {
+    IdU,
+    Levels,
+    Username,
+    Password,
+    JenisKelamin,
+    Nama,
+    TglLahir,
+    NomorTelp,
+    NIK,
+    Email,
+    NomorKK,
+    FotoProfile,
+    WaktuRegister,
+    systemAntrian,
+  } = route.params;
  
   return (
     <Tab.Navigator
@@ -56,7 +71,20 @@ function AdminPageNavigation({navigation, route}) {
         name="HomeAdminScreen"
         component={HomeAdminScreen}
         initialParams={{
-          idUser,
+          IdU,
+          Levels,
+          Username,
+          Password,
+          JenisKelamin,
+          Nama,
+          TglLahir,
+          NomorTelp,
+          NIK,
+          Email,
+          NomorKK,
+          FotoProfile,
+          WaktuRegister,
+          systemAntrian,
         }
           
         }

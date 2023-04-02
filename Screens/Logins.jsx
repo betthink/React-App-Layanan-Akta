@@ -9,14 +9,10 @@ import {hijau, putih} from '../Assets/StylingComponent/Coloring';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const LoginU = ({navigation}) => {
+const Logins = ({navigation}) => {
   const [UsernameHook, setUsernameHook] = useState('');
   const [PasswordHook, setPasswordHook] = useState('');
-  // const [isLoading, setisLoading] = useState(false);
-  // const [userInfo, setuserInfo] = useState({});
-  // const [dataUser, setDataUser] = useState({
-  //   Username: Username,
-  //   Password: Password
+
   // })
 
   // * test
@@ -37,19 +33,72 @@ const LoginU = ({navigation}) => {
           Username: UsernameHook,
           Password: PasswordHook,
         },
-        url: `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/Login.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      // console.log(res.data);
-      const {value, IdUmum} = res.data;
-      if (value == 1) {
-        alert('Berhasil Login');
-        // navigation.navigate("HomeUmum", {idUser: IdUmum})
+      console.log(res.data, "ini res dataaa");
+      const {
+        Level,
+        Id,
+        Username,
+        Password,
+        JenisKelamin,
+        Nama,
+        TglLahir,
+        NomorTelp,
+        NIK,
+        Email,
+        NomorKK,
+        FotoProfile,
+        WaktuRegister,
+        systemAntrian,
+      } = res.data;
+
+    //   console.log(Level, 'ini login level??????');
+      if (Level == 'Umum') {
+        alert('User Umum Berhasil Login');
+
         // * sesion using asynStorage
         AsyncStorage.setItem('userName', UsernameHook);
-        AsyncStorage.setItem('idUser', IdUmum);
-        navigation.navigate('HomeUmum', {idUser: IdUmum});
-        // console.log("ini adalah Id:",res.data.IdUmum);
+        AsyncStorage.setItem('idUser', Id);
+        AsyncStorage.setItem('Level', Level);
+        navigation.navigate('HomeUmum', {
+          IdU: Id,
+          Levels: Level,
+          Username: Username,
+          Password: Password,
+          JenisKelamin: JenisKelamin,
+          Nama: Nama,
+          Email: Email,
+          TglLahir: TglLahir,
+          NomorTelp: NomorTelp,
+          NIK: NIK,
+          NomorKK: NomorKK,
+          FotoProfile: FotoProfile,
+          WaktuRegister: WaktuRegister,
+          systemAntrian: systemAntrian
+        });
+      } else if (Level == 'Admin') {
+        alert('User Admin Berhasil Login');
+        AsyncStorage.setItem('userName', UsernameHook);
+        AsyncStorage.setItem('idUser', Id);
+        AsyncStorage.setItem('Level', Level);
+        navigation.navigate('AdminPageNavigation', {
+            IdU: Id,
+            Levels: Level,
+            Username: Username,
+            Password: Password,
+            JenisKelamin: JenisKelamin,
+            Nama: Nama,
+            Email: Email,
+            TglLahir: TglLahir,
+            NomorTelp: NomorTelp,
+            NIK: NIK,
+            NomorKK: NomorKK,
+            FotoProfile: FotoProfile,
+            WaktuRegister: WaktuRegister,
+            systemAntrian: systemAntrian
+          });
       } else {
         alert('login Gagal!!!');
       }
@@ -62,16 +111,6 @@ const LoginU = ({navigation}) => {
 
     // console.log(res.data['message']);
   }
-  // const getApiLogin = () => {
-  //   const dataForApi = {
-  //     Username: Username,
-  //     Password: Password
-  //   }
-  //   axios
-  //     .post(`${urlLogin}`, dataForApi)
-  //     .then( result =>{setDataUser(result.data), console.log(result.data)})
-  //     .catch(error => console.log('err:', error));
-  // };
 
   return (
     <ScrollView style={{backgroundColor: putih}}>
@@ -106,7 +145,7 @@ const LoginU = ({navigation}) => {
         {/* Login Umum Text */}
         <View style={{alignItems: 'center', marginTop: 50}}>
           <Text style={[stylesDariGaya.TextBold, {letterSpacing: 2}]}>
-            Login Umum
+            Login
           </Text>
         </View>
         {/* Form Login */}
@@ -152,12 +191,9 @@ const LoginU = ({navigation}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             marginTop: 50,
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginAdmin')}>
-            <Text>Login Sebagai Admin</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('FormBuatAkunScreen')}>
             <Text style={{color: hijau, textDecorationLine: 'underline'}}>
@@ -170,4 +206,4 @@ const LoginU = ({navigation}) => {
   );
 };
 
-export default LoginU;
+export default Logins;

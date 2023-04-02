@@ -6,4 +6,5 @@ const abuAbu = "#D9EBE9";
 const hitam = "#000";
 const toska = "#28AFB0";
 const pinkGelap = "#D65BD1";
-export {putih, putihGelap, hijau, ungu, abuAbu, hitam, toska, pinkGelap}
+const gelap = "#2F2E41";
+export {putih, putihGelap, hijau, ungu, abuAbu, hitam, toska, pinkGelap, gelap}

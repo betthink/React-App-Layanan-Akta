@@ -32,8 +32,9 @@ const LoginAdmin = ({navigation}) => {
         alert('Berhasil Login');
         console.log('ini adalah id admin', IdAdmin);
         navigation.navigate('AdminPageNavigation', {idUser: IdAdmin});
-        // navigation.push('HomeAdminScreen', {idUser: IdAdmin});
-        // navigation.props('HomeAdminScreen', {idUser: IdAdmin})
+        // AsyncStorage.setItem('userNameAdmin', username);
+        // AsyncStorage.setItem('idUser', IdAdmin);
+   
       } else {
         alert('Login gagal');
       }

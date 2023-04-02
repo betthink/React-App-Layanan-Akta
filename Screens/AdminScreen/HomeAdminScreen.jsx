@@ -7,9 +7,24 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fotoUrl } from '../../Assets/Url';
 const HomeAdminScreen = ({navigation, route}) => {
    // * ambil Id user
-   const {idUser} = route.params; 
+   const {
+    IdU,
+    Levels,
+    Username,
+    Password,
+    JenisKelamin,
+    Nama,
+    TglLahir,
+    NomorTelp,
+    NIK,
+    Email,
+    NomorKK,
+    FotoProfile,
+    WaktuRegister,
+    systemAntrian,
+  } = route.params;
 
-   console.log(idUser,"ini data route di HomeAdmin");
+   console.log(Levels,"Ini Level??");
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
       <View
@@ -18,7 +33,7 @@ const HomeAdminScreen = ({navigation, route}) => {
           {paddingHorizontal: 22, justifyContent: 'center'},
         ]}>
         {/* textt */}
-        <View style={[{flexDirection: 'row'}]}>
+        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
           <View>
             <Text style={[stylesDariGaya.TextMediumBold, {color: putih}]}>
               Selamat datang Admin
@@ -29,7 +44,22 @@ const HomeAdminScreen = ({navigation, route}) => {
           <View style={{padding: 2, backgroundColor: '#fff', borderRadius: 30}}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('ProfileAdminScreen', {Id: idUser})
+                navigation.navigate('Profile', {
+                  IdU: IdU,
+                  Levels: Levels,
+                  Username: Username,
+                  Password: Password,
+                  JenisKelamin: JenisKelamin,
+                  Nama: Nama,
+                  TglLahir: TglLahir,
+                  Email: Email,
+                  NomorTelp: NomorTelp,
+                  NIK: NIK,
+                  NomorKK: NomorKK,
+                  FotoProfile: FotoProfile,
+                  WaktuRegister: WaktuRegister,
+                  systemAntrian: systemAntrian,
+                })
               }>
               <Image
                 style={[stylesDariGaya.fotoProfile]}

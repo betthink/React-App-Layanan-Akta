@@ -104,6 +104,6 @@ export const stylesDariGaya = StyleSheet.create({
     elevation: 2,
     marginVertical: 5,
     backgroundColor: putih,
-    alignItems: 'center',
+    // alignItems: 'center',
   }
 });

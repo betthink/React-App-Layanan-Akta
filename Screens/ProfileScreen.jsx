@@ -1,10 +1,11 @@
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from './Components/Gayaaja';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons'
 import {pickSingle, isCancel} from 'react-native-document-picker';
-import {fotoUrl} from '../../Assets/Url';
+import {fotoUrl} from 'Assets/Url';
 import axios from 'axios';
 import {
   hijau,
@@ -13,7 +14,7 @@ import {
   putihGelap,
   toska,
   ungu,
-} from '../../Assets/StylingComponent/Coloring';
+} from '../Assets/StylingComponent/Coloring';
 import {ipAdress} from '../Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -33,59 +34,26 @@ async function openDocument() {
   }
 }
 
-const ProfileUmumScreen = ({navigation, route}) => {
-  // document picker function
-  // * ini adalah Id
-  const [idUmum, setIdUmum] = useState('');
-  const [username, setusername] = useState('');
-  const [password, setpassword] = useState('');
-  const [tanggallahir, settanggallahir] = useState('');
+const ProfileScreen = ({navigation, route}) => {
 
-  const [nik, setnik] = useState('');
-  const [nokk, setnokk] = useState('');
-  const [nomortelepon, setnomortelepon] = useState('');
-  const [jeniskelamin, setjeniskelamin] = useState('');
-  const [nama, setnama] = useState('');
-  const [email, setemail] = useState('');
-  const [fotoProfile, setfotoProfile] = useState('');
-  const {Id} = route.params;
-  const alldata = [
-    {
-      idUmum,
-    },
-    {
-      username,
-    },
-    {
-      password,
-    },
-    {
-      tanggallahir,
-    },
-    {
-      nik,
-    },
-    {
-      nokk,
-    },
-    {
-      nomortelepon,
-    },
-    {
-      jeniskelamin,
-    },
-    {
-      nama,
-    },
-    {
-      email,
-    },
-    {
-      fotoProfile,
-    },
-  ];
-  // console.log("ini adalah id Umum",Id)
   // * Fungsi tampilkan data user by id
+  const {
+    IdU,
+    Levels,
+    Username,
+    Password,
+    JenisKelamin,
+    Nama,
+    TglLahir,
+    Email,
+    NomorTelp,
+    NIK,
+    NomorKK,
+    FotoProfile,
+    WaktuRegister,
+    systemAntrian,
+  } = route.params;
+  
   async function tampilkanDataById() {
     try {
       // setIdUmum({Id});
@@ -132,7 +100,8 @@ const ProfileUmumScreen = ({navigation, route}) => {
   }
 
   useEffect(() => {
-    tampilkanDataById();
+    // tampilkanDataById();
+ 
   }, []);
   //   // console.log(res.data['message']);
 
@@ -145,7 +114,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
       const res = await axios({
         method: 'POST',
         data: {
-          IdUmum: Id,
+          Id: IdU,
         },
         url: `${ipAdress}/aplikasiLayananAkta/deleteAkun.php`,
         headers: {'Content-Type': 'multipart/form-data'},
@@ -178,7 +147,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center'}}
             onPress={() => navigation.goBack()}>
-            <MaterialIcon color={hitam} size={16} name="arrow-back-ios" />
+            <IonIcon color={hitam} size={16} name="chevron-back"/>
             <Text style={[stylesDariGaya.textDef, {color: hitam}]}>
               Kembali
             </Text>
@@ -220,8 +189,9 @@ const ProfileUmumScreen = ({navigation, route}) => {
               }}>
               <Image
                 size={50}
+                style={[{width: 80, height: 80, borderRadius: 40}]}
                 source={{
-                  uri: fotoUrl,
+                  uri: FotoProfile,
                 }}
               />
               <MaterialIcon
@@ -233,40 +203,40 @@ const ProfileUmumScreen = ({navigation, route}) => {
             </TouchableOpacity>
             <View
               style={{position: 'absolute', bottom: 5, alignItems: 'center'}}>
-              <Text style={[stylesDariGaya.TextBold]}>{username}</Text>
-              <Text style={[stylesDariGaya.textDataStyle]}>Id: {idUmum}</Text>
+              <Text style={[stylesDariGaya.TextBold]}>{Username}</Text>
+              <Text style={[stylesDariGaya.textDataStyle]}>Id: {IdU}</Text>
             </View>
           </View>
         </View>
         {/* Data pribadi  */}
         <ScrollView style={{marginTop: 20}}>
           <View style={[stylesDariGaya.listData]}>
-            <Text>Password</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{password}</Text>
+            <Text>Level</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{Levels}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Nama</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nama}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{Nama}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>NIK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nik}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{NIK}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>No. KK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nokk}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{NomorKK}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>No. Telp</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nomortelepon}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{NomorTelp}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Jenis Kelamin</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{jeniskelamin}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{JenisKelamin}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
-            <Text>Email</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{email}</Text>
+            <Text>Tanggal Lahir</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{TglLahir}</Text>
           </View>
         </ScrollView>
         {/* *buttons */}
@@ -283,17 +253,18 @@ const ProfileUmumScreen = ({navigation, route}) => {
             // onPress={getApi}
             onPress={() =>
               navigation.navigate('EditDataUserUmum', {
-                userName: username,
-                idUmum: idUmum,
-                password: password,
-                tanggallahir: tanggallahir,
-                nik: nik,
-                nokk: nokk,
-                nomortelepon: nomortelepon,
-                jeniskelamin: jeniskelamin,
-                nama: nama,
-                email: email,
-                fotoProfile: fotoProfile,
+                userName: Username,
+                idUmum: IdU,
+                password: Password,
+                tanggallahir: TglLahir,
+                
+                nik: NIK,
+                nokk: NomorKK,
+                nomortelepon: NomorTelp,
+                jeniskelamin: JenisKelamin,
+                nama: Nama,
+                email: Email,
+                fotoProfile: FotoProfile,
               })
             }
             style={[styleButtons.buttons, {backgroundColor: hijau}]}>
@@ -326,7 +297,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
   );
 };
 
-export default ProfileUmumScreen;
+export default ProfileScreen;
 
 const styleButtons = StyleSheet.create({
   buttons: {

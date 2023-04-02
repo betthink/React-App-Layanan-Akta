@@ -47,6 +47,7 @@ const [jeniskelamin, setjeniskelamin] = useState('');
 const [nama, setnama] = useState('');
 const [email, setemail] = useState('');
 const [fotoProfile, setfotoProfile] = useState('');
+console.log(fotoProfile, "ini url foto profile");
 const {Id} = route.params; 
 // console.log("ini adalah id Umum",Id)
 // * Fungsi tampilkan data user by id
@@ -71,7 +72,6 @@ async function tampilkanDataById() {
     setIdUmum(idUmum)
     console.log(res.data);
     const {value, IdUmum} = res.data;
-    // console.log(value,"ini value")
     if(value == 1 ){
       // alert("Berhasil ambil")
       setnama(res.data.Nama)
@@ -84,36 +84,18 @@ async function tampilkanDataById() {
       settanggallahir(res.data.TglLahir)
       setnomortelepon(res.data.NomorTelp)
       setfotoProfile(res.data.FotoProfile)
-
-      
-      // console.log("ini adalah Id:",res.data.IdUmum);
     }else{
       alert(" Gagal ambil data")
     }
-   
-
-  
-    // navigation.navigate('AdminPageNavigation')
   } catch (error) {
     alert("Gagal tampil data")
     console.log(error);
   }
-  
-
-  // console.log(res.data['message']); 
-
-
 }
-
  useEffect(() => {
-
   tampilkanDataById()
   }, []);
-//   // console.log(res.data['message']); 
-
-
 // }
-
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
       {/* foto profile container */}
@@ -132,6 +114,7 @@ async function tampilkanDataById() {
           <View
             style={{
               backgroundColor: putih,
+              opacity: 5,
               marginTop: 30,
               paddingVertical: 10,
               borderBottomWidth: 3,
@@ -144,9 +127,10 @@ async function tampilkanDataById() {
               alignItems: 'center',
             }}>
             {/* image profile */}
+           
             <TouchableOpacity
               style={{
-                backgroundColor: putihGelap,
+                // backgroundColor: putihGelap,
                 width: 100,
                 height: 100,
                 justifyContent: 'center',
@@ -163,10 +147,9 @@ async function tampilkanDataById() {
                 // console.log("hgh");
               }}>
               <Image
-                size={50}
-                source={{
-                  uri: fotoUrl,
-                }}
+                style={[{width: 80, height: 80, borderRadius: 40}]}
+                // source={require('../../Assets/Images/album.png')}
+                source={{uri: fotoProfile}}
               />
               <MaterialIcon
                 style={{position: 'absolute', top: 5, right: 0}}

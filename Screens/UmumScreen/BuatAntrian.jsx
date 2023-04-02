@@ -10,13 +10,21 @@ import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
 import {stylesDariGaya} from '../Components/Gayaaja';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 
 // fungsi upload file
 async function uploadBerkas() {
   try {
     // console.log(test.pickSingle());
-    const doc = await pickSingle();
-    // console.log(doc);
+    const doc = await DocumentPicker.pick({
+      type: [DocumentPicker.types.pdf],
+
+    });
+    // let {uri} = doc;
+    // setImage(doc);
+    console.log(doc[0].uri, "ini array");
+    console.log(doc, "ini array");
+    // console.log(uri, "ini adalah uri dari file terpilih");
   } catch (err) {
     console.log(err);
     if (isCancel(err)) {
@@ -26,6 +34,26 @@ async function uploadBerkas() {
     }
   }
 }
+// async function openDocument() {
+//   try {
+//     // console.log(test.pickSingle());
+//     const doc = await DocumentPicker.pick({
+//       type: [DocumentPicker.types.images],
+
+//     });
+//     // let {uri} = doc;
+//     setImage(doc);
+//     console.log(doc[0], "ini array");
+//     // console.log(uri, "ini adalah uri dari file terpilih");
+//   } catch (err) {
+//     console.log(err);
+//     if (isCancel(err)) {
+//       console.log('canceled', err);
+//     } else {
+//       console.log(err);
+//     }
+//   }
+// }
 
 const BuatAntrian = ({navigation}) => {
   const IconAddFile = 'note-add';

@@ -6,12 +6,21 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Image,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {stylesDariGaya} from '../Components/Gayaaja';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
+import {
+  gelap,
+  hijau,
+  hitam,
+  pinkGelap,
+  putih,
+  putihGelap,
+  ungu,
+} from '../../Assets/StylingComponent/Coloring';
 // import {DataTerdaftar} from '../UmumScreen/AntrianLayananScreen';
 import {styleAntian} from '../UmumScreen/BuatAntrian';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -30,11 +39,17 @@ function AntrianTerdaftarAdmin({navigation}) {
       method: 'POST',
       url: `${url}`,
     })
-      .then(res => console.log(setDataAntrian(res.data)))
+      .then(res => {
+        let data = res.data;
+
+        data = data.filter(d => d.Status == 'Terdaftar');
+        setDataAntrian(data)}) 
       .catch(err => console.log(err));
   };
   useEffect(() => {
     getApi();
+    // console.log(dataAntrian, "ini adalah link profile");
+    
     // console.log("ambil data baru");
   }, []);
 
@@ -47,20 +62,31 @@ function AntrianTerdaftarAdmin({navigation}) {
 
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
-      <View style={[styleHalAntrian.containerBoxHijau]}>
+      <View style={[]}>
         <FlatList
+        style={[{marginBottom: 70}]}
           data={dataAntrian}
           renderItem={({item}) => (
+      
             <TouchableOpacity
+              style={[{}]}
               onPress={() =>
+            {
                 navigation.navigate('DetailAntrian', {
-                  IdAntrian: item.IdAntrian,
-                })
+                  detailAntrian: item,
+                })}
               }>
-              <View
-                style={stylesDariGaya.listStyle}>
-                <Text>{item.IdAntrian}</Text>
-                <Text style={{marginLeft: 10}}>{item.WaktuPendaftaran}</Text>
+              <View style={stylesDariGaya.listStyle}>
+                <Image
+                  // size={50}
+                  style={[{width: 50, height: 50, borderRadius: 25}]}
+                  // source={{uri:item.FotoProfile}}
+                  // source={require('../../Assets/Images/album.png')}
+                />
+                <View style={[{justifyContent: 'flex-end', alignItems: 'flex-end'}]}>
+                  <Text style={[stylesDariGaya.TextMediumBold]}>Id :{item.IdAntrian}</Text>
+                  <Text style={{marginLeft: 10}}>Waktu Pendafataran :{item.WaktuPendaftaran}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           )}
@@ -68,9 +94,10 @@ function AntrianTerdaftarAdmin({navigation}) {
       </View>
       {/* tombol */}
       <TouchableOpacity
+      onPress={()=>navigation.navigate('AntrianDiprosesAdmin')}
         style={{
-         paddingHorizontal: 50,
-         paddingVertical: 10,
+          paddingHorizontal: 50,
+          paddingVertical: 10,
           backgroundColor: putih,
           borderWidth: 2,
           borderColor: hijau,
@@ -78,6 +105,9 @@ function AntrianTerdaftarAdmin({navigation}) {
           // width: '70%',
           alignSelf: 'center',
           marginTop: 30,
+          position: 'absolute',
+          bottom: 10,
+
         }}>
         <Text style={[stylesDariGaya.TextMediumBold, {alignSelf: 'center'}]}>
           Proses
@@ -127,7 +157,6 @@ function AntrianDiprosesAdmin({navigation}) {
               Formulir Permohonan akta
             </Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
@@ -135,7 +164,6 @@ function AntrianDiprosesAdmin({navigation}) {
           <View style={[styleAntian.formInputFile]}>
             <Text style={[styleAntian.fontContent]}>Scan KK</Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
@@ -143,7 +171,6 @@ function AntrianDiprosesAdmin({navigation}) {
           <View style={[styleAntian.formInputFile]}>
             <Text style={[styleAntian.fontContent]}>Scan KTP Ibu</Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
@@ -151,7 +178,6 @@ function AntrianDiprosesAdmin({navigation}) {
           <View style={[styleAntian.formInputFile]}>
             <Text style={[styleAntian.fontContent]}>Scan KTP Bapak</Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
@@ -159,7 +185,6 @@ function AntrianDiprosesAdmin({navigation}) {
           <View style={[styleAntian.formInputFile]}>
             <Text style={[styleAntian.fontContent]}>Scan Buku Nikah</Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
@@ -169,10 +194,28 @@ function AntrianDiprosesAdmin({navigation}) {
               Scan Surat Keterangan Lahir
             </Text>
             <TouchableOpacity onPress={() => {}}>
-              {/* <View style={{height: 10, width: 10, backgroundColor: 'tomato'}} /> */}
               <MaterialIcon nama={IconDownload} size={sizeIcon} color={hijau} />
             </TouchableOpacity>
           </View>
+          {/* button tolak */}
+          <TouchableOpacity
+            onPress={() => {
+              
+              alert('hehe');
+            }}
+            style={[
+              {
+                marginTop: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 40,
+                width: 100,
+                backgroundColor: pinkGelap,
+                borderRadius: 50,
+              },
+            ]}>
+            <Text style={[{color: putih}]}>Tolak</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
       {/* end container box hijau */}
@@ -181,11 +224,20 @@ function AntrianDiprosesAdmin({navigation}) {
         style={[
           {flexDirection: 'row', margin: 30, justifyContent: 'space-between'},
         ]}>
-        <TextInput placeholder="Pesan ke user" style={[{width: '45%'}]} />
+        <TextInput
+          placeholder="Pesan ke user"
+          style={[{width: '50%', borderBottomWidth: 2, borderColor: hijau}]}
+        />
         <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('AntrianTerdaftarAdmin')
+            alert('nanti woy');
+          }}
           style={[
-            stylesDariGaya.Tombols,
-            {justifyContent: 'center', alignItems: 'center'},
+            styleHalAntrian.buttonThisPage,
+            {
+              backgroundColor: hijau,
+            },
           ]}>
           <Text style={[stylesDariGaya.textColorWhite]}>Selesai</Text>
         </TouchableOpacity>
@@ -193,6 +245,62 @@ function AntrianDiprosesAdmin({navigation}) {
     </View>
   );
 }
+
+const AntrianDitolakAdmin = ({navigation}) => {
+  let [dataAntrian, setDataAntrian] = useState([]);
+
+  const TampilkanAntrianDitolak = () => {
+    const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrian.php`;
+    axios({
+      method: 'POST',
+      url: `${url}`,
+    })
+      .then(res => {
+        let data = res.data;
+
+        data = data.filter(d => d.Status == 'Ditolak');
+        // console.log(data, "ini data antrian terdaftar");
+        // setLeng(data.length);
+        setDataAntrian(data);
+      })
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    TampilkanAntrianDitolak();
+  }, []);
+  return (
+    <View style={[stylesDariGaya.containerBoxHijau]}>
+      <FlatList
+        data={dataAntrian}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('DetailAntrian', {detailAntrian: item})
+            }
+            style={[
+              {
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                borderLeftWidth: 3,
+                borderColor: hijau,
+                marginVertical: 5,
+                paddingVertical: 20,
+                borderBottomWidth: 4,
+                borderBottomColor: putihGelap,
+              },
+            ]}>
+            <MaterialIcon size={25} name="clear" color={hijau} />
+            <Text>
+              Antrian nomor
+              <Text style={[{color: hijau}]}>{item.IdAntrian}</Text>
+            </Text>
+            <Text>{item.WaktuPendaftaran}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
+  );
+};
 function TabKelolaAntrian() {
   const insets = useSafeAreaInsets();
   return (
@@ -211,16 +319,60 @@ function TabKelolaAntrian() {
         name="AntrianTerdaftarAdmin"
         component={AntrianTerdaftarAdmin}
         options={{
-          tabBarLabel: 'Terdaftar',
-          title: 'Terdaftar',
+          title: ({color, focused}) => (
+            <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+              <MaterialIcon
+                color={focused ? putih : gelap}
+                name="schedule"
+                size={25}
+              />
+              {focused ? (
+                <Text style={[{color: putih}]}>Terdaftar</Text>
+              ) : (
+                <Text style={[{color: gelap}]}>Terdaftar</Text>
+              )}
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name="AntrianDiprosesAdmin"
         component={AntrianDiprosesAdmin}
         options={{
-          tabBarLabel: 'Proses',
-          title: 'Proses',
+          title: ({color, focused}) => (
+            <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+              <MaterialIcon
+                color={focused ? putih : gelap}
+                name="queue"
+                size={25}
+              />
+              {focused ? (
+                <Text style={[{color: putih}]}>Diproses</Text>
+              ) : (
+                <Text style={[{color: gelap}]}>Diproses</Text>
+              )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AntrianDitolakAdmin"
+        component={AntrianDitolakAdmin}
+        options={{
+          title: ({color, focused}) => (
+            <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+              <MaterialIcon
+                color={focused ? putih : gelap}
+                name="clear"
+                size={25}
+              />
+              {focused ? (
+                <Text style={[{color: putih}]}>Ditolak</Text>
+              ) : (
+                <Text style={[{color: gelap}]}>Ditolak</Text>
+              )}
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -238,6 +390,14 @@ const styleHalAntrian = StyleSheet.create({
     borderLeftColor: hijau,
     // justifyContent: '',
     paddingLeft: 10,
+  },
+  buttonThisPage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+    paddingVerticall: 5,
+
+    borderRadius: 20,
   },
 
   styleContainerText: {flexDirection: 'row', justifyContent: 'space-around'},

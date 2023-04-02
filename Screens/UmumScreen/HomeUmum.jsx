@@ -1,12 +1,5 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, Image, LogBox} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import HeaderCloud from '../Components/HeaderCloud';
 import HeaderBox from '../Components/HeaderBox';
 import {stylesDariGaya} from '../Components/Gayaaja';
@@ -19,15 +12,28 @@ import {fotoUrl} from '../../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeUmum = ({navigation, route}) => {
   // * ambil Id user
-  const [idUse, setIdUse] =useState('')
-  AsyncStorage.getItem('idUser').then(
-    d=>{
-      setIdUse(d);
-      // console.log(d, "ini adalah id");
-    }
-  );
-  const idUser = idUse; 
+  const {
+    IdU,
+    Levels,
+    Username,
+    Password,
+    JenisKelamin,
+    Nama,
+    TglLahir,
+    NomorTelp,
+    NIK,
+    Email,
+    NomorKK,
+    FotoProfile,
+    WaktuRegister,
+    systemAntrian,
+  } = route.params;
+  // const [Id, SetId] = useState('');
+  // const Level = AsyncStorage.getItem('Level');
 
+ 
+  // ? ignore warning
+  LogBox.ignoreAllLogs();
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {/* <ImageBackground
@@ -36,7 +42,7 @@ const HomeUmum = ({navigation, route}) => {
       <View style={stylesDariGaya.headerBox}>
         {/* wrapp all content di box */}
         <View style={{paddingHorizontal: 22, paddingTop: 30, flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around',}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             {/* wrap Text Header */}
             <View style={[{flex: 1}]}>
               <View>
@@ -58,7 +64,24 @@ const HomeUmum = ({navigation, route}) => {
             <View
               style={{padding: 2, backgroundColor: '#fff', borderRadius: 30}}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ProfileUmumScreen', {Id: idUser})}>
+                onPress={() =>
+                  navigation.navigate('Profile', {
+                    IdU: IdU,
+                    Levels: Levels,
+                    Username: Username,
+                    Password: Password,
+                    JenisKelamin: JenisKelamin,
+                    Nama: Nama,
+                    TglLahir: TglLahir,
+                    Email: Email,
+                    NomorTelp: NomorTelp,
+                    NIK: NIK,
+                    NomorKK: NomorKK,
+                    FotoProfile: FotoProfile,
+                    WaktuRegister: WaktuRegister,
+                    systemAntrian: systemAntrian,
+                  })
+                }>
                 <Image
                   style={[stylesDariGaya.fotoProfile]}
                   // source={require('../../Assets/Images/album.png')}
@@ -91,21 +114,23 @@ const HomeUmum = ({navigation, route}) => {
             <Text style={{color: '#fff'}}>Pemberiathuan</Text>
           </TouchableOpacity>
         </View>
-        <View style={[{flex: 2}]} >
-        {/* Person png */}
-        <PersonPng />
-      
-        <MenuUmum />
-        {/* button Buat antrian */}
-        <View
-          style={[
-            stylesDariGaya.Tombols,
-            {alignSelf: 'center', marginTop: 30},
-          ]}>
-          <TouchableOpacity onPress={()=>navigation.navigate('BuatAntrian')} style={[stylesDariGaya.contentCenter]}>
-            <Text style={[stylesDariGaya.textColorWhite]}>Buat Antrian</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={[{flex: 2}]}>
+          {/* Person png */}
+          <PersonPng />
+
+          <MenuUmum />
+          {/* button Buat antrian */}
+          <View
+            style={[
+              stylesDariGaya.Tombols,
+              {alignSelf: 'center', marginTop: 30},
+            ]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('BuatAntrian')}
+              style={[stylesDariGaya.contentCenter]}>
+              <Text style={[stylesDariGaya.textColorWhite]}>Buat Antrian</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       {/* </ImageBackground> */}

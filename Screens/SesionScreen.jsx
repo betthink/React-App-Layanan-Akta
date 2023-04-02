@@ -2,19 +2,25 @@ import {View, Text, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SplashScreen = ({navigation}) => {
+const SesionScreen = ({navigation}) => {
   const [animating, setAnimating] = useState(true);
+  const [level, setLevel] = useState("");
   const checkSesion = () => {
-    setTimeout(() => {
-      setAnimating(false);
-      AsyncStorage.getItem('userName').then(value => {
-        const iduser = AsyncStorage.getItem('idUser');
-        console.log(iduser, "ini adalah id users dari async");
-        value === null
-          ? navigation.navigate('LoginU')
-          : navigation.navigate('HomeUmum', {idUser: iduser});
-      });
-    });
+   AsyncStorage.getItem('Level').then(d=>{setLevel(d)});
+
+  if(level == "Umum") {
+navigation.navigate("HomeUmum");
+  } else if (level == "Admin") {
+    navigation.navigate('AdminPageNavigation', {idUser: IdAdmin});
+  } else {
+    navigation.navigate("Logins");
+  }
+ 
+
+    // setTimeout(() => {
+    // //   setAnimating(false);
+
+    // });
   };
   useEffect(() => {
     checkSesion();
@@ -26,4 +32,4 @@ const SplashScreen = ({navigation}) => {
   );
 };
 
-export default SplashScreen;
+export default SesionScreen;
