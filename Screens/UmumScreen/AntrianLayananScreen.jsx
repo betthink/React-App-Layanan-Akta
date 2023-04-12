@@ -107,6 +107,7 @@ function AntrianTerdaftar() {
         // console.log(data, "ini data antrian terdaftar");
         setLeng(data.length);
         setDataAntrian(data);
+        console.log(data, 'ini struktur data');
       })
       .catch(err => console.log(err));
   };
@@ -120,33 +121,23 @@ function AntrianTerdaftar() {
       style={[{flex: 1, backgroundColor: '#fff', justifyContent: 'center'}]}>
       <View
         style={[
-          {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
+          {paddingHorizontal: 40, paddingVertical: 20},
         ]}>
         <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Waktu Pendaftaran</Text>
           <View style={[StyleFlatlist.boxColors, {backgroundColor: hijau}]} />
+          <Text style={[{paddingLeft: 10}]}>Waktu Pendaftaran</Text>
         </View>
         <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Username pembuat antrian</Text>
           <View
             style={[StyleFlatlist.boxColors, {backgroundColor: '#2E0FEF'}]}
           />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Estimasi Pengambilan Akta</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: colorKuning}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Nomor antrian</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: ungu}]} />
+          <Text style={[{paddingLeft: 10}]}>Nama pembuat antrian</Text>
         </View>
       </View>
       {leng < 1 ? (
         <View
           style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Ini value kurang dari 1 </Text>
+          <Text>Belum ada pendaftar</Text>
         </View>
       ) : (
         <FlatList
@@ -163,7 +154,7 @@ function AntrianTerdaftar() {
                   width: '90%',
                   borderLeftWidth: 3,
                   borderColor: '#24CE9E',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
                   flexDirection: 'row',
                   alignItems: 'center',
                   height: 100,
@@ -196,7 +187,7 @@ function AntrianTerdaftar() {
                         // borderRadius: 7,
                       }
                     />
-                    <Text>{item.IdAntrian}</Text>
+                    <Text>{item.IdPendaftaran}</Text>
                   </View>
                   <View style={[StyleFlatlist.boxStyle]}>
                     <View
@@ -205,39 +196,11 @@ function AntrianTerdaftar() {
                         // borderRadius: 7,
                       }
                     />
-                    <Text>{item.IdAntrian}</Text>
-                  </View>
-                </View>
-              </View>
-              {/* colom 3 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={{
-                        height: 14,
-                        width: 14,
-                        // borderRadius: 7,
-                        backgroundColor: colorHijau,
-                      }}
-                    />
                     <Text>{item.WaktuPendaftaran}</Text>
                   </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [
-                          StyleFlatlist.boxColors,
-                          {backgroundColor: colorKuning},
-                        ]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.WaktuSelesai}</Text>
-                  </View>
                 </View>
               </View>
+
               {/* ============================== */}
             </View>
           )}
@@ -272,36 +235,26 @@ function AntrianDiproses() {
   return (
     // {dataAntrian.length < 1 ()}
     <View style={[{flex: 1, backgroundColor: '#fff'}]}>
-      <View
+       <View
         style={[
-          {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
+          {paddingHorizontal: 40, paddingVertical: 20},
         ]}>
         <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Waktu Pendaftaran</Text>
           <View style={[StyleFlatlist.boxColors, {backgroundColor: hijau}]} />
+          <Text style={[{paddingLeft: 10}]}>Waktu Pendaftaran</Text>
         </View>
         <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Username pembuat antrian</Text>
           <View
             style={[StyleFlatlist.boxColors, {backgroundColor: '#2E0FEF'}]}
           />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Estimasi Pengambilan Akta</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: colorKuning}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Nomor antrian</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: ungu}]} />
+          <Text style={[{paddingLeft: 10}]}>Nama pembuat antrian</Text>
         </View>
       </View>
 
       {value < 1 ? (
         <View
           style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Ini value kurang dari 1 </Text>
+          <Text>Belum ada antrian diproses </Text>
         </View>
       ) : (
         <FlatList
