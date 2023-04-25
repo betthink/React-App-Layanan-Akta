@@ -1,1 +1,1 @@
-export const ipAdress = "http://192.168.50.23";
+export const ipAdress = "https://applayananakta.000webhostapp.com";
