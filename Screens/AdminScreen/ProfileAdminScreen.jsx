@@ -1,4 +1,11 @@
-import {View, Text, TouchableOpacity, Image, StyleSheet, Switch} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Switch,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {stylesDariGaya} from '../Components/ImportedStyles';
@@ -38,7 +45,6 @@ async function openDocument() {
 }
 
 const ProfileAdminScreen = ({navigation, route}) => {
-
   const {Id} = route.params;
   // console.log(Id, "Id dari params");
   const [password, setpassword] = useState('');
@@ -94,32 +100,32 @@ const ProfileAdminScreen = ({navigation, route}) => {
 
   const [updatedLayanan, setUpdatedLayanan] = useState(null);
 
-const switchStatusAntrian = async () => {
-  setvalDefaultLayanan((prevValue) => (prevValue == 1 ? 0 : 1));
-  setUpdatedLayanan((prevValue) => (prevValue === 1 ? 0 : 1));
+  const switchStatusAntrian = async () => {
+    setvalDefaultLayanan(prevValue => (prevValue == 1 ? 0 : 1));
+    setUpdatedLayanan(prevValue => (prevValue == 1 ? 0 : 1));
+// console.log(updatedLayanan);
+    const formData = new FormData();
+    formData.append('Id', Id);
+    formData.append('StatusLayanan', updatedLayanan);
 
-  const formData = new FormData();
-  formData.append('Id', Id);
-  formData.append('StatusLayanan', updatedLayanan);
-
-  try {
-    const res = await axios.post(
-      `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+    try {
+      const res = await axios.post(
+        `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      }
-    );
+      );
 
-    const output = res.data;
-    console.log(output, 'Ini output data');
-    getDataUSer();
-  } catch (error) {
-    console.error(error);
-  }
-};
+      const output = res.data;
+      console.log(output, 'Ini output data');
+      getDataUSer();
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // const ubahBolean = async () => {
   //   // const newBool = valueStatus === 1 ? 0 : 1;
   //   setubahBoolean(!ubahBoolean);
@@ -174,7 +180,6 @@ const switchStatusAntrian = async () => {
   // ?UseeEffect=
   useEffect(() => {
     if (valDefaultLayanan == null) {
-      
     }
     console.log(valDefaultLayanan, 'ini di valDefaultLayanan');
     const reloadPage = navigation.addListener('focus', async () => {
@@ -186,7 +191,7 @@ const switchStatusAntrian = async () => {
     });
 
     return reloadPage;
-  }, [ valDefaultLayanan]);
+  }, [valDefaultLayanan]);
 
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -303,12 +308,12 @@ const switchStatusAntrian = async () => {
           style={[
             {
               marginVertical: 20,
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
               flexDirection: 'row',
             },
           ]}>
           {/* buttons Edit */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             // onPress={getApi}
             onPress={async () => {
               try {
@@ -318,7 +323,7 @@ const switchStatusAntrian = async () => {
             style={[styleButtons.buttons, {backgroundColor: ungu}]}>
             <MaterialIcon name="edit" color={putih} />
             <Text style={[{color: putih}]}>Edit Akun</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* Turn on / off antrian */}
           <TouchableOpacity
             onPress={async () => {
@@ -331,20 +336,21 @@ const switchStatusAntrian = async () => {
                 console.log(error);
               }
             }}>
-         <Switch
-        trackColor={{ false: '#767577', true: '#81b0ff' }}
-        thumbColor={valDefaultLayanan==1 ? hijau : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={switchStatusAntrian}
-        value={valDefaultLayanan ==1} />
+            <Switch
+              trackColor={{false: '#767577', true: '#81b0ff'}}
+              thumbColor={valDefaultLayanan == 1 ? hijau : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={switchStatusAntrian}
+              value={valDefaultLayanan == 1}
+            />
           </TouchableOpacity>
           {/* buttons Log out */}
           <TouchableOpacity
-            onPress={() => {
-              AsyncStorage.clear();
-              navigation.replace('Login');
+            onPress={async () => {
+              await AsyncStorage.clear();
+              await navigation.replace('Login');
             }}
-            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
+            style={[styleButtons.buttons, {backgroundColor: '#454545', marginLeft: 20}]}>
             <MaterialIcon name="logout" color={putih} />
             <Text style={[{color: putih}]}>Log Out</Text>
           </TouchableOpacity>

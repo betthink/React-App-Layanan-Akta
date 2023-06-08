@@ -1,6 +1,7 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { ungu } from '../../Assets/StylingComponent/Coloring';
 
 const ListSyarat = ({title, bodyText}) => {
   const [showContent, setShowContent] = useState(false);
@@ -34,8 +35,9 @@ const styleList = StyleSheet.create({
     overflow: 'hidden',
     borderLeftWidth: 2,
     borderBottomWidth: 2,
-    borderColor: '#28AFB0',
+    borderColor: ungu,
     marginHorizontal: 22,
+    marginBottom: 5,
     // marginVertical: 5,
   },
   title: {
